@@ -1,4 +1,4 @@
-package com.example.catcraft.network
+package com.example.catcraft.network.interceptor
 
 import okhttp3.logging.HttpLoggingInterceptor
 import timber.log.Timber

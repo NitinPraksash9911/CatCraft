@@ -1,7 +1,9 @@
 package com.example.catcraft.arch
 
 import com.example.catcraft.arch.Resource.Success
+import retrofit2.HttpException
 import retrofit2.Response
+import java.io.IOException
 
 suspend fun <T> getResult(call: suspend () -> Response<T>): Resource<T> {
     return try {
@@ -12,9 +14,21 @@ suspend fun <T> getResult(call: suspend () -> Response<T>): Resource<T> {
                 body
             )
         }
+
         Resource.Error(response.message())
 
-    } catch (e: Exception) {
-        Resource.Error(e.localizedMessage ?: "Unexpected Error Occurred")
+    } catch (throwable: Throwable) {
+        when (throwable) {
+            is IOException -> {
+                Resource.Error(throwable.localizedMessage ?: "An IO exception happened ")
+            }
+            is HttpException -> {
+
+                Resource.Error(throwable.message ?: "An Http exception happened ")
+            }
+            else -> {
+                Resource.Error(throwable.message ?: "An Unknown exception happened ")
+            }
+        }
     }
 }

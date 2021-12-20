@@ -1,5 +1,6 @@
-package com.example.catcraft.network
+package com.example.catcraft.network.interceptor
 
+import com.example.catcraft.network.utils.ConnectionManager
 import okhttp3.Interceptor
 import okhttp3.Response
 import java.io.IOException

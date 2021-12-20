@@ -4,20 +4,19 @@ import com.example.catcraft.BuildConfig
 import com.example.catcraft.datasource.apiservice.CatBreedService
 import com.example.catcraft.datasource.repository.CatBreedRepository
 import com.example.catcraft.datasource.repository.ICatBreedRepository
-import com.example.catcraft.network.ConnectionManager
-import com.example.catcraft.network.LoggingInterceptor
-import com.example.catcraft.network.NetworkStatusInterceptor
+import com.example.catcraft.network.interceptor.LoggingInterceptor
+import com.example.catcraft.network.interceptor.NetworkCacheInterceptor
+import com.example.catcraft.network.interceptor.NetworkStatusInterceptor
+import com.example.catcraft.network.interceptor.OfflineCacheInterceptor
 import com.google.gson.GsonBuilder
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import java.io.IOException
 import java.util.concurrent.TimeUnit.SECONDS
 import javax.inject.Singleton
 
@@ -53,8 +52,6 @@ object NetworkModule {
     Nope! If you add it first, it’ll run while there’s still nothing to log.
     Interceptors work on the chain they receive, so you want the logging interceptor to get the final chain.
 
-     1. Online Interceptor
-     2 and Offline interceptor
 
      */
 
@@ -62,7 +59,9 @@ object NetworkModule {
     @Provides
     fun providesOkHttpClient(
         loggingInterceptor: HttpLoggingInterceptor,
-        networkStatusInterceptor: NetworkStatusInterceptor
+        networkStatusInterceptor: NetworkStatusInterceptor,
+        networkCacheInterceptor: NetworkCacheInterceptor,
+        offlineCacheInterceptor: OfflineCacheInterceptor
     ): OkHttpClient =
         OkHttpClient
             .Builder()
@@ -70,12 +69,12 @@ object NetworkModule {
             .apply {
                 if (BuildConfig.DEBUG) addInterceptor(loggingInterceptor)//2
             }
+            .addNetworkInterceptor(networkCacheInterceptor)//3
+            .addInterceptor(offlineCacheInterceptor)//4
             .readTimeout(15, SECONDS)
             .writeTimeout(15, SECONDS)
             .connectTimeout(15, SECONDS)
             .build()
-
-
 
     @Singleton
     @Provides
@@ -87,7 +86,6 @@ object NetworkModule {
         .addConverterFactory(factory)
         .baseUrl(BuildConfig.BASE_URL)
         .build()
-
 
     @Singleton
     @Provides

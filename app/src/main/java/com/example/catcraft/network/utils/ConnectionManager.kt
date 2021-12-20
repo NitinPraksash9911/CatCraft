@@ -1,4 +1,4 @@
-package com.example.catcraft.network
+package com.example.catcraft.network.utils
 
 import android.content.Context
 import android.net.ConnectivityManager

@@ -7,7 +7,6 @@ import retrofit2.http.GET
 
 interface CatBreedService {
 
-    @Cacheable
     @GET("v1/breeds")
     suspend fun getCatBreedList(): Response<List<CatBreedData>>
 }

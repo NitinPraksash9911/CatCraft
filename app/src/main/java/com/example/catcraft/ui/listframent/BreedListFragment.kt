@@ -6,8 +6,6 @@ import android.util.Log
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle.State
-import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.example.catcraft.arch.BaseFragment
 import com.example.catcraft.arch.ViewState.Error
@@ -22,8 +20,6 @@ import com.example.catcraft.utils.snack
 import com.example.catcraft.viewmodel.CatBreedViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.InternalCoroutinesApi
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.launch
 
 const val TAG = "BreedListFragment"
 
@@ -42,12 +38,14 @@ class BreedListFragment : BaseFragment<FragmentBreedListBinding>
 
         binding.breedListRv.adapter = breedAdapter
 
+
         dataObserver()
 
         binding.pullToRefresh.setOnRefreshListener {
             viewModel.fetchCatBreeds()
             binding.pullToRefresh.isRefreshing = false
         }
+
     }
 
 

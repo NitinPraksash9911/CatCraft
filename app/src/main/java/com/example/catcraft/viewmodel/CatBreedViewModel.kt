@@ -3,6 +3,16 @@ package com.example.catcraft.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.catcraft.arch.Resource
+import com.example.catcraft.arch.Resource.Error
+import com.example.catcraft.arch.Resource.HttpErrors.BadGateWay
+import com.example.catcraft.arch.Resource.HttpErrors.InternalServerError
+import com.example.catcraft.arch.Resource.HttpErrors.RemovedResourceFound
+import com.example.catcraft.arch.Resource.HttpErrors.ResourceForbidden
+import com.example.catcraft.arch.Resource.HttpErrors.ResourceNotFound
+import com.example.catcraft.arch.Resource.HttpErrors.ResourceRemoved
+import com.example.catcraft.arch.Resource.InvalidData
+import com.example.catcraft.arch.Resource.NetworkException
+import com.example.catcraft.arch.Resource.Success
 import com.example.catcraft.arch.ViewState
 import com.example.catcraft.datasource.model.CatBreedData
 import com.example.catcraft.datasource.repository.ICatBreedRepository
@@ -19,8 +29,6 @@ class CatBreedViewModel @Inject constructor(
     private val dispatchers: DispatcherProvider
 ) : ViewModel() {
 
-
-
     private var _breedListData = MutableStateFlow<ViewState<List<CatBreedData>>>(ViewState.Loading)
 
     val breedListData: StateFlow<ViewState<List<CatBreedData>>>
@@ -32,16 +40,58 @@ class CatBreedViewModel @Inject constructor(
 
     fun fetchCatBreeds() {
         viewModelScope.launch(dispatchers.io) {
-            when (val result = repository.getCatBreedList()) {
-                is Resource.Success -> {
-                    _breedListData.value = ViewState.Success(result.value)
-                }
-                is Resource.Error -> {
-                    _breedListData.value = ViewState.Error(result.msg)
-                }
-            }
+            val result = repository.getCatBreedList()
+            handlerCatBreedResult(result)
+
         }
 
+    }
+
+    private fun handlerCatBreedResult(result: Resource<List<CatBreedData>>) {
+        when (result) {
+            is Success -> {
+                showCatBreedList(result.value)
+            }
+            is ResourceForbidden -> {
+                handleError(result.exception)
+            }
+            is ResourceNotFound -> {
+                handleError(result.exception)
+            }
+            is InternalServerError -> {
+                handleError(result.exception)
+            }
+            is BadGateWay -> {
+                handleError(result.exception)
+            }
+            is ResourceRemoved -> {
+                handleError(result.exception)
+            }
+            is RemovedResourceFound -> {
+                handleError(result.exception)
+            }
+            is Error -> {
+                handleError(result.error)
+            }
+            is NetworkException -> {
+                handleError(result.error)
+            }
+            is InvalidData -> {
+                showEmptyView()
+            }
+        }
+    }
+
+    private fun showEmptyView() {
+
+    }
+
+    private fun handleError(error: String) {
+        _breedListData.value = ViewState.Error(error)
+    }
+
+    private fun showCatBreedList(value: List<CatBreedData>) {
+        _breedListData.value = ViewState.Success(value)
     }
 
 }

@@ -36,7 +36,7 @@ class CatBreedAdapter(private var itemCallback: (position: Int) -> Unit) :
         }
 
         fun bind(breedData: CatBreedData) {
-            binding.recipeIv.loadImageWithUrl("")
+            binding.recipeIv.loadImageWithUrl(breedData.image?.url)
             binding.recipeNameTv.text = breedData.name
             binding.lifeSpanTv.text = breedData.lifeSpan
         }

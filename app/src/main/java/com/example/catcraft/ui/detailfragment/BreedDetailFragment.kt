@@ -1,14 +1,10 @@
 package com.example.catcraft.ui.detailfragment
 
-import android.content.Context
-import android.net.ConnectivityManager
-import android.net.NetworkCapabilities
-import android.os.Build
 import android.os.Bundle
 import androidx.navigation.fragment.navArgs
 import com.example.catcraft.arch.BaseFragment
 import com.example.catcraft.databinding.FragmentBreedDetailBinding
-import com.example.catcraft.datasource.model.CatBreedData
+import com.example.catcraft.ui.detailfragment.datasource.model.CatBreedData
 import com.example.catcraft.utils.loadImageWithUrl
 import dagger.hilt.android.AndroidEntryPoint
 

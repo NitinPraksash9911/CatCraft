@@ -1,7 +1,6 @@
-package com.example.catcraft.datasource.apiservice
+package com.example.catcraft.ui.detailfragment.datasource.apiservice
 
-import com.example.catcraft.datasource.model.CatBreedData
-import com.example.catcraft.network.utils.Cacheable
+import com.example.catcraft.ui.detailfragment.datasource.model.CatBreedData
 import retrofit2.Response
 import retrofit2.http.GET
 

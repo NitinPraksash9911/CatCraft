@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.example.catcraft.databinding.CatBreedItemViewBinding
-import com.example.catcraft.datasource.model.CatBreedData
+import com.example.catcraft.ui.detailfragment.datasource.model.CatBreedData
 import com.example.catcraft.ui.listframent.adapter.CatBreedAdapter.CatBreedViewHolder
 import com.example.catcraft.utils.loadImageWithUrl
 

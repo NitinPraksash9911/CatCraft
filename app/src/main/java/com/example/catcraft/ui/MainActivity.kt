@@ -5,7 +5,6 @@ import android.os.PersistableBundle
 import androidx.activity.viewModels
 import com.example.catcraft.arch.BaseActivity
 import com.example.catcraft.databinding.ActivityMainBinding
-import com.example.catcraft.viewmodel.CatBreedViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

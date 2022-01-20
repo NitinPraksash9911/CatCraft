@@ -1,8 +1,8 @@
-package com.example.catcraft.datasource.repository
+package com.example.catcraft.ui.detailfragment.datasource.repository
 
 import com.example.catcraft.arch.Resource
-import com.example.catcraft.datasource.apiservice.CatBreedService
-import com.example.catcraft.datasource.model.CatBreedData
+import com.example.catcraft.ui.detailfragment.datasource.apiservice.CatBreedService
+import com.example.catcraft.ui.detailfragment.datasource.model.CatBreedData
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.impl.annotations.MockK
@@ -13,17 +13,17 @@ import org.junit.Before
 import org.junit.Test
 import retrofit2.Response
 
-class CatBreedRepositoryTest {
+class CatBreedRemoteRepositoryTest {
 
     @MockK
     private lateinit var breedApi: CatBreedService
 
-    private lateinit var breedRepository: CatBreedRepository
+    private lateinit var breedRemoteRepository: CatBreedRemoteRemoteRepository
 
     @Before
     fun setUp() {
         MockKAnnotations.init(this)
-        breedRepository = CatBreedRepository(breedApi)
+        breedRemoteRepository = CatBreedRemoteRemoteRepository(breedApi)
     }
 
     @Test
@@ -34,7 +34,7 @@ class CatBreedRepositoryTest {
         coEvery { breedApi.getCatBreedList() } returns response
 
         runBlocking {
-            val result = breedRepository.getCatBreedList()
+            val result = breedRemoteRepository.getCatBreedList()
             assertEquals(Resource.Success(response.body()), result)
         }
 
@@ -48,7 +48,7 @@ class CatBreedRepositoryTest {
         coEvery { breedApi.getCatBreedList() } returns response
 
         runBlocking {
-            val result = breedRepository.getCatBreedList()
+            val result = breedRemoteRepository.getCatBreedList()
             assertEquals(Resource.Success(response.body()), result)
         }
     }
@@ -61,7 +61,7 @@ class CatBreedRepositoryTest {
         coEvery { breedApi.getCatBreedList() } returns response
 
         runBlocking {
-            val result = breedRepository.getCatBreedList()
+            val result = breedRemoteRepository.getCatBreedList()
             assertEquals(Resource.Error(response.message()), result)
         }
 

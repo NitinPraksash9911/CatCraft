@@ -21,6 +21,6 @@
         tools:layout="@layout/fragment_breed_detail" >
         <argument
             android:name="breedDetail"
-            app:argType="com.example.catcraft.datasource.model.CatBreedData" />
+            app:argType="com.example.catcraft.ui.detailfragment.datasource.model.CatBreedData" />
     </fragment>
 </navigation>

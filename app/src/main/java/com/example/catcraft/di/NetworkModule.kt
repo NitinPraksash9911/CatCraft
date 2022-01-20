@@ -1,9 +1,9 @@
 package com.example.catcraft.di
 
 import com.example.catcraft.BuildConfig
-import com.example.catcraft.datasource.apiservice.CatBreedService
-import com.example.catcraft.datasource.repository.CatBreedRepository
-import com.example.catcraft.datasource.repository.ICatBreedRepository
+import com.example.catcraft.ui.detailfragment.datasource.apiservice.CatBreedService
+import com.example.catcraft.ui.detailfragment.datasource.repository.CatBreedRemoteRemoteRepository
+import com.example.catcraft.ui.detailfragment.datasource.repository.ICatBreedRemoteRepository
 import com.example.catcraft.network.interceptor.LoggingInterceptor
 import com.example.catcraft.network.interceptor.NetworkCacheInterceptor
 import com.example.catcraft.network.interceptor.NetworkStatusInterceptor
@@ -101,6 +101,6 @@ object NetworkModule {
 
     @Singleton
     @Provides
-    fun providesCatBreedRepository(breedService: CatBreedService): ICatBreedRepository = CatBreedRepository(breedService)
+    fun providesCatBreedRepository(breedService: CatBreedService): ICatBreedRemoteRepository = CatBreedRemoteRemoteRepository(breedService)
 
 }

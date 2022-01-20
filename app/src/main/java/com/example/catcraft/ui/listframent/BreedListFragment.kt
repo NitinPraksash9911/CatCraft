@@ -17,7 +17,7 @@ import com.example.catcraft.utils.hide
 import com.example.catcraft.utils.launchAndCollectIn
 import com.example.catcraft.utils.show
 import com.example.catcraft.utils.snack
-import com.example.catcraft.viewmodel.CatBreedViewModel
+import com.example.catcraft.ui.CatBreedViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.InternalCoroutinesApi
 

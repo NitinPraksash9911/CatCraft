@@ -1,4 +1,4 @@
-package com.example.catcraft.ui
+package com.example.catcraft.ui.listframent.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -14,8 +14,8 @@ import com.example.catcraft.arch.Resource.InvalidData
 import com.example.catcraft.arch.Resource.NetworkException
 import com.example.catcraft.arch.Resource.Success
 import com.example.catcraft.arch.ViewState
-import com.example.catcraft.ui.detailfragment.datasource.model.CatBreedData
-import com.example.catcraft.ui.detailfragment.datasource.repository.IDataCatBreedRepository
+import com.example.catcraft.ui.listframent.datasource.model.CatBreedData
+import com.example.catcraft.ui.listframent.datasource.repository.IDataCatBreedRepository
 import com.example.catcraft.utils.DispatcherProvider
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow

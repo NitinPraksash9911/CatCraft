@@ -1,6 +1,6 @@
-package com.example.catcraft.ui.detailfragment.datasource.apis
+package com.example.catcraft.ui.listframent.datasource.apis
 
-import com.example.catcraft.ui.detailfragment.datasource.model.CatBreedData
+import com.example.catcraft.ui.listframent.datasource.model.CatBreedData
 import retrofit2.Response
 import retrofit2.http.GET
 

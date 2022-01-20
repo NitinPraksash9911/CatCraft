@@ -1,13 +1,10 @@
 package com.example.catcraft.di
 
 import com.example.catcraft.BuildConfig
-import com.example.catcraft.ui.detailfragment.datasource.apis.CatBreedService
-import com.example.catcraft.ui.detailfragment.datasource.repository.IDataCatBreedRepository
 import com.example.catcraft.network.interceptor.LoggingInterceptor
 import com.example.catcraft.network.interceptor.NetworkCacheInterceptor
 import com.example.catcraft.network.interceptor.NetworkStatusInterceptor
 import com.example.catcraft.network.interceptor.OfflineCacheInterceptor
-import com.example.catcraft.ui.detailfragment.datasource.repository.RemoteCatBreedRepository
 import com.google.gson.GsonBuilder
 import dagger.Module
 import dagger.Provides

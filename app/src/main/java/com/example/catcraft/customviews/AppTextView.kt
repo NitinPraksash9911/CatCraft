@@ -12,7 +12,11 @@ class AppTextView : AppCompatTextView {
 
     constructor(context: Context, attrs: AttributeSet?) : this(context, attrs!!, 0)
 
-    constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
+    constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(
+        context,
+        attrs,
+        defStyleAttr
+    ) {
         initResources(context, attrs, defStyleAttr)
     }
 
@@ -27,7 +31,7 @@ class AppTextView : AppCompatTextView {
         }
     }
 
-    fun setTextFont(context: Context, fontIndex: Int) {
+    private fun setTextFont(context: Context, fontIndex: Int) {
         var typeface: Typeface?
         when (fontIndex) {
             Font.BOLD -> typeface = FontCache.getFont(context, Font.BOLD_FONT)

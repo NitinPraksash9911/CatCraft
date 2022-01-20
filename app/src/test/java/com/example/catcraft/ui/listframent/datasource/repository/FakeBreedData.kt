@@ -1,7 +1,7 @@
-package com.example.catcraft.ui.detailfragment.datasource.repository
+package com.example.catcraft.ui.listframent.datasource.repository
 
-import com.example.catcraft.ui.detailfragment.datasource.model.CatBreedData
-import com.example.catcraft.ui.detailfragment.datasource.model.CatBreedData.Image
+import com.example.catcraft.ui.listframent.datasource.model.CatBreedData
+import com.example.catcraft.ui.listframent.datasource.model.CatBreedData.Image
 
 object FakeBreedData {
 

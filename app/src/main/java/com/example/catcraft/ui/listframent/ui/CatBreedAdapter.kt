@@ -1,4 +1,4 @@
-package com.example.catcraft.ui.listframent.adapter
+package com.example.catcraft.ui.listframent.ui
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -6,8 +6,8 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.example.catcraft.databinding.CatBreedItemViewBinding
-import com.example.catcraft.ui.detailfragment.datasource.model.CatBreedData
-import com.example.catcraft.ui.listframent.adapter.CatBreedAdapter.CatBreedViewHolder
+import com.example.catcraft.ui.listframent.datasource.model.CatBreedData
+import com.example.catcraft.ui.listframent.ui.CatBreedAdapter.CatBreedViewHolder
 import com.example.catcraft.utils.loadImageWithUrl
 
 class CatBreedAdapter(private var itemCallback: (position: Int) -> Unit) :

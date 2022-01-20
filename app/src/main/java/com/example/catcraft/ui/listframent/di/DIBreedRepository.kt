@@ -1,11 +1,11 @@
-package com.example.catcraft.ui.detailfragment.di
+package com.example.catcraft.ui.listframent.di
 
 
-import com.example.catcraft.ui.detailfragment.datasource.apis.CatBreedService
-import com.example.catcraft.ui.detailfragment.datasource.repository.DataCatBreedRepository
-import com.example.catcraft.ui.detailfragment.datasource.repository.RemoteCatBreedRepository
-import com.example.catcraft.ui.detailfragment.datasource.repository.IDataCatBreedRepository
-import com.example.catcraft.ui.detailfragment.datasource.repository.LocalCateBreedRepository
+import com.example.catcraft.ui.listframent.datasource.apis.CatBreedService
+import com.example.catcraft.ui.listframent.datasource.repository.DataCatBreedRepository
+import com.example.catcraft.ui.listframent.datasource.repository.RemoteCatBreedRepository
+import com.example.catcraft.ui.listframent.datasource.repository.IDataCatBreedRepository
+import com.example.catcraft.ui.listframent.datasource.repository.LocalCateBreedRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

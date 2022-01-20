@@ -6,18 +6,15 @@ import android.util.Log
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle.State
-import androidx.navigation.fragment.findNavController
 import com.example.catcraft.arch.BaseFragment
 import com.example.catcraft.arch.ViewState.Error
 import com.example.catcraft.arch.ViewState.Loading
 import com.example.catcraft.arch.ViewState.Success
 import com.example.catcraft.databinding.FragmentBreedListBinding
-import com.example.catcraft.ui.listframent.adapter.CatBreedAdapter
 import com.example.catcraft.utils.hide
 import com.example.catcraft.utils.launchAndCollectIn
 import com.example.catcraft.utils.show
 import com.example.catcraft.utils.snack
-import com.example.catcraft.ui.CatBreedViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.InternalCoroutinesApi
 

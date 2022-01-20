@@ -1,8 +1,8 @@
-package com.example.catcraft.ui.detailfragment.datasource.repository
+package com.example.catcraft.ui.listframent.datasource.repository
 
 import com.example.catcraft.arch.Resource
 import com.example.catcraft.network.utils.getResult
-import com.example.catcraft.ui.detailfragment.datasource.model.CatBreedData
+import com.example.catcraft.ui.listframent.datasource.model.CatBreedData
 import javax.inject.Inject
 
 class DataCatBreedRepository @Inject constructor(

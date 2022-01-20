@@ -18,12 +18,15 @@ class RemoteCatBreedRepositoryTest {
     @MockK
     private lateinit var breedApi: CatBreedService
 
-    private lateinit var breedRemoteRepository: CatBreedRemoteRemoteRepository
+    @MockK
+    private lateinit var breedRemoteRepository: IDataCatBreedRepository
 
     @Before
     fun setUp() {
         MockKAnnotations.init(this)
-        breedRemoteRepository = CatBreedRemoteRemoteRepository(breedApi)
+        val remoteRepo = RemoteCatBreedRepository(breedApi)
+        val localRepo = LocalCateBreedRepository()
+//        breedRemoteRepository = DataCatBreedRepository(remoteRepo,localRepo)
     }
 
     @Test

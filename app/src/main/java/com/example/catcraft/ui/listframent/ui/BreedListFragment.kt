@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle.State
+import androidx.navigation.fragment.findNavController
 import com.example.catcraft.arch.BaseFragment
 import com.example.catcraft.arch.ViewState.Error
 import com.example.catcraft.arch.ViewState.Loading
@@ -80,8 +81,8 @@ class BreedListFragment : BaseFragment<FragmentBreedListBinding>
 
     private fun onListItemClick(position: Int) {
         val currentCatBreed = breedAdapter.currentList[position]
-//        val directions = BreedListFragmentDirections.actionBreedListFragmentToBreedDetailFragment(currentCatBreed)
-//        findNavController().navigate(directions)
+        val directions = BreedListFragmentDirections.actionBreedListFragmentToBreedDetailFragment(currentCatBreed)
+        findNavController().navigate(directions)
     }
 
 }

@@ -1,7 +1,7 @@
 package com.example.catcraft.ui.detailfragment.datasource.repository
 
 import com.example.catcraft.arch.Resource
-import com.example.catcraft.ui.detailfragment.datasource.apiservice.CatBreedService
+import com.example.catcraft.ui.detailfragment.datasource.apis.CatBreedService
 import com.example.catcraft.ui.detailfragment.datasource.model.CatBreedData
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
@@ -13,7 +13,7 @@ import org.junit.Before
 import org.junit.Test
 import retrofit2.Response
 
-class CatBreedRemoteRepositoryTest {
+class RemoteCatBreedRepositoryTest {
 
     @MockK
     private lateinit var breedApi: CatBreedService

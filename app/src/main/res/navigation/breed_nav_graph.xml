@@ -16,7 +16,7 @@
     </fragment>
     <fragment
         android:id="@+id/breedDetailFragment"
-        android:name="com.example.catcraft.ui.detailfragment.BreedDetailFragment"
+        android:name="com.example.catcraft.ui.detailfragment.ui.BreedDetailFragment"
         android:label="fragment_breed_detail"
         tools:layout="@layout/fragment_breed_detail" >
         <argument

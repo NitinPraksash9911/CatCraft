@@ -1,13 +1,13 @@
 package com.example.catcraft.di
 
 import com.example.catcraft.BuildConfig
-import com.example.catcraft.ui.detailfragment.datasource.apiservice.CatBreedService
-import com.example.catcraft.ui.detailfragment.datasource.repository.CatBreedRemoteRemoteRepository
-import com.example.catcraft.ui.detailfragment.datasource.repository.ICatBreedRemoteRepository
+import com.example.catcraft.ui.detailfragment.datasource.apis.CatBreedService
+import com.example.catcraft.ui.detailfragment.datasource.repository.IDataCatBreedRepository
 import com.example.catcraft.network.interceptor.LoggingInterceptor
 import com.example.catcraft.network.interceptor.NetworkCacheInterceptor
 import com.example.catcraft.network.interceptor.NetworkStatusInterceptor
 import com.example.catcraft.network.interceptor.OfflineCacheInterceptor
+import com.example.catcraft.ui.detailfragment.datasource.repository.RemoteCatBreedRepository
 import com.google.gson.GsonBuilder
 import dagger.Module
 import dagger.Provides
@@ -84,7 +84,7 @@ object NetworkModule {
     ): Retrofit = Retrofit.Builder()
         .client(okHttpClient)
         .addConverterFactory(factory)
-        .baseUrl(BuildConfig.BASE_URL)
+        .baseUrl(com.example.catcraft.BuildConfig.BASE_URL)
         .build()
 
     @Singleton
@@ -95,12 +95,11 @@ object NetworkModule {
         return interceptor
     }
 
-    @Singleton
-    @Provides
-    fun provideCatBreedService(retrofit: Retrofit): CatBreedService = retrofit.create(CatBreedService::class.java)
 
-    @Singleton
-    @Provides
-    fun providesCatBreedRepository(breedService: CatBreedService): ICatBreedRemoteRepository = CatBreedRemoteRemoteRepository(breedService)
+
+//    @Singleton
+//    @Provides
+//    fun providesCatBreedRepository(breedService: CatBreedService): IDataCatBreedRepository =
+//        RemoteCatBreedRepository(breedService)
 
 }

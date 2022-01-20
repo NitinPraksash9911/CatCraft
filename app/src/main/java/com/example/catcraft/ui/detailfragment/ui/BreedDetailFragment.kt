@@ -1,4 +1,4 @@
-package com.example.catcraft.ui.detailfragment
+package com.example.catcraft.ui.detailfragment.ui
 
 import android.os.Bundle
 import androidx.navigation.fragment.navArgs

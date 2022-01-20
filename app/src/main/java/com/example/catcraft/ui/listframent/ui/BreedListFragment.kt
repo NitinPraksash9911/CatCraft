@@ -1,4 +1,4 @@
-package com.example.catcraft.ui.listframent
+package com.example.catcraft.ui.listframent.ui
 
 import android.graphics.Color
 import android.os.Bundle
@@ -83,8 +83,8 @@ class BreedListFragment : BaseFragment<FragmentBreedListBinding>
 
     private fun onListItemClick(position: Int) {
         val currentCatBreed = breedAdapter.currentList[position]
-        val directions = BreedListFragmentDirections.actionBreedListFragmentToBreedDetailFragment(currentCatBreed)
-        findNavController().navigate(directions)
+//        val directions = BreedListFragmentDirections.actionBreedListFragmentToBreedDetailFragment(currentCatBreed)
+//        findNavController().navigate(directions)
     }
 
 }

@@ -15,7 +15,7 @@ import com.example.catcraft.arch.Resource.NetworkException
 import com.example.catcraft.arch.Resource.Success
 import com.example.catcraft.arch.ViewState
 import com.example.catcraft.ui.detailfragment.datasource.model.CatBreedData
-import com.example.catcraft.ui.detailfragment.datasource.repository.ICatBreedRemoteRepository
+import com.example.catcraft.ui.detailfragment.datasource.repository.IDataCatBreedRepository
 import com.example.catcraft.utils.DispatcherProvider
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -25,7 +25,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class CatBreedViewModel @Inject constructor(
-    private val remoteRepository: ICatBreedRemoteRepository,
+    private val repositoryData: IDataCatBreedRepository,
     private val dispatchers: DispatcherProvider
 ) : ViewModel() {
 
@@ -40,7 +40,7 @@ class CatBreedViewModel @Inject constructor(
 
     fun fetchCatBreeds() {
         viewModelScope.launch(dispatchers.io) {
-            val result = remoteRepository.getCatBreedList()
+            val result = repositoryData.getCatBreedList()
             handlerCatBreedResult(result)
 
         }

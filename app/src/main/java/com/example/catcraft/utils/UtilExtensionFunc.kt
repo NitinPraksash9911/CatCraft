@@ -36,3 +36,8 @@ fun View.show() {
     this.visibility = View.VISIBLE
 }
 
+
+//1-> Custom toast
+//2-> error desr
+//3 Image could be defualt one and from backand
+// typ of error from backend

@@ -2,21 +2,12 @@ package com.example.catcraft.ui.listframent.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.catcraft.arch.Resource
-import com.example.catcraft.arch.Resource.Error
-import com.example.catcraft.arch.Resource.HttpErrors.BadGateWay
-import com.example.catcraft.arch.Resource.HttpErrors.InternalServerError
-import com.example.catcraft.arch.Resource.HttpErrors.RemovedResourceFound
-import com.example.catcraft.arch.Resource.HttpErrors.ResourceForbidden
-import com.example.catcraft.arch.Resource.HttpErrors.ResourceNotFound
-import com.example.catcraft.arch.Resource.HttpErrors.ResourceRemoved
-import com.example.catcraft.arch.Resource.InvalidData
-import com.example.catcraft.arch.Resource.NetworkException
-import com.example.catcraft.arch.Resource.Success
 import com.example.catcraft.arch.ViewState
 import com.example.catcraft.ui.listframent.datasource.model.CatBreedData
 import com.example.catcraft.ui.listframent.datasource.repository.IDataCatBreedRepository
 import com.example.catcraft.utils.DispatcherProvider
+import com.nitin.networkerrorhandler.utils.ErrorResponse
+import com.nitin.networkerrorhandler.datasource.model.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -43,51 +34,23 @@ class CatBreedViewModel @Inject constructor(
             val result = repositoryData.getCatBreedList()
             handlerCatBreedResult(result)
 
+            val string = "ss"
+            string[0]
         }
 
     }
 
     private fun handlerCatBreedResult(result: Resource<List<CatBreedData>>) {
         when (result) {
-            is Success -> {
-                showCatBreedList(result.value)
-            }
-            is ResourceForbidden -> {
-                handleError(result.exception)
-            }
-            is ResourceNotFound -> {
-                handleError(result.exception)
-            }
-            is InternalServerError -> {
-                handleError(result.exception)
-            }
-            is BadGateWay -> {
-                handleError(result.exception)
-            }
-            is ResourceRemoved -> {
-                handleError(result.exception)
-            }
-            is RemovedResourceFound -> {
-                handleError(result.exception)
-            }
-            is Error -> {
-                handleError(result.error)
-            }
-            is NetworkException -> {
-                handleError(result.error)
-            }
-            is InvalidData -> {
-                showEmptyView()
+            is Resource.Success -> showCatBreedList(result.value)
+            is Resource.Error -> {
+                showError(result.errorResponse)
             }
         }
     }
 
-    private fun showEmptyView() {
-
-    }
-
-    private fun handleError(error: String) {
-        _breedListData.value = ViewState.Error(error)
+   private fun showError(errorResponse: ErrorResponse) {
+        _breedListData.value = ViewState.Error(errorResponse)
     }
 
     private fun showCatBreedList(value: List<CatBreedData>) {

@@ -1,6 +1,5 @@
 package com.example.catcraft.ui.listframent.ui
 
-import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -8,14 +7,13 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle.State
 import androidx.navigation.fragment.findNavController
 import com.example.catcraft.arch.BaseFragment
-import com.example.catcraft.arch.ViewState.Error
-import com.example.catcraft.arch.ViewState.Loading
-import com.example.catcraft.arch.ViewState.Success
+import com.example.catcraft.arch.ViewState.*
 import com.example.catcraft.databinding.FragmentBreedListBinding
 import com.example.catcraft.utils.hide
 import com.example.catcraft.utils.launchAndCollectIn
 import com.example.catcraft.utils.show
-import com.example.catcraft.utils.snack
+import com.nitin.networkerrorhandler.errortypes.ErrorHandler
+import com.nitin.networkerrorhandler.datasource.model.TypeError
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.InternalCoroutinesApi
 
@@ -68,9 +66,23 @@ class BreedListFragment : BaseFragment<FragmentBreedListBinding>
                 is Error -> {
                     binding.progressCircular.visibility = View.GONE
                     binding.breedListRv.hide()
-                    breedEvent.errorMsg.snack(Color.RED, binding.root)
                     binding.errorTv.show()
-                    Log.d(TAG, breedEvent.errorMsg)
+                    ErrorHandler.showError(
+                        errorResponse = breedEvent.errorResponse,
+                        TypeError.Snack(requireActivity())
+
+                        // not use type here and the type will come from backend
+                        // and if we got the exception show snack bar with mesaage
+                        //
+
+                    )
+                    ErrorHandler.showError(
+                        errorResponse = breedEvent.errorResponse,
+                        TypeError.Toast(requireContext())
+                    )
+
+                    //
+
                 }
             }
 
@@ -78,10 +90,10 @@ class BreedListFragment : BaseFragment<FragmentBreedListBinding>
     }
 
 
-
     private fun onListItemClick(position: Int) {
         val currentCatBreed = breedAdapter.currentList[position]
-        val directions = BreedListFragmentDirections.actionBreedListFragmentToBreedDetailFragment(currentCatBreed)
+        val directions =
+            BreedListFragmentDirections.actionBreedListFragmentToBreedDetailFragment(currentCatBreed)
         findNavController().navigate(directions)
     }
 

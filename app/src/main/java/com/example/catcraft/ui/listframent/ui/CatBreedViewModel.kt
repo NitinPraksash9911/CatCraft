@@ -6,7 +6,7 @@ import com.example.catcraft.arch.ViewState
 import com.example.catcraft.ui.listframent.datasource.model.CatBreedData
 import com.example.catcraft.ui.listframent.datasource.repository.IDataCatBreedRepository
 import com.example.catcraft.utils.DispatcherProvider
-import com.nitin.networkerrorhandler.utils.ErrorResponse
+import com.nitin.networkerrorhandler.datasource.model.ErrorResponse
 import com.nitin.networkerrorhandler.datasource.model.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow

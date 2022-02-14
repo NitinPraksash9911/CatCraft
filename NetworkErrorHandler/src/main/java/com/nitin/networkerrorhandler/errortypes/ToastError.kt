@@ -30,6 +30,16 @@ internal object ToastError {
                     "GotException: " + errorResponse.exception?.localizedMessage
                 )
             }
+            DataStatus.NetworkError -> {
+                context.toast(
+                    "NetworkError: " + errorResponse.exception?.localizedMessage
+                )
+            }
+            DataStatus.ServerError -> {
+                context.toast(
+                    "ServerError: " + errorResponse.exception?.localizedMessage
+                )
+            }
         }
 
     }

@@ -72,13 +72,12 @@ class BreedListFragment : BaseFragment<FragmentBreedListBinding>
                         TypeError.Snack(requireActivity())
 
                         // not use type here and the type will come from backend
-                        // and if we got the exception show snack bar with mesaage
+                        // and if we got the exception show snack bar with message
                         //
-
                     )
                     ErrorHandler.showError(
                         errorResponse = breedEvent.errorResponse,
-                        TypeError.Toast(requireContext())
+                        TypeError.Toast(requireActivity())
                     )
 
                     //

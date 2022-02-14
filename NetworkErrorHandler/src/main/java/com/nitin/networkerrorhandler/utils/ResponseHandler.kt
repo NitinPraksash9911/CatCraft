@@ -1,11 +1,11 @@
 package com.nitin.networkerrorhandler.utils
 
-import com.google.gson.Gson
 import com.nitin.networkerrorhandler.datasource.model.DataStatus
-import com.nitin.networkerrorhandler.datasource.model.Error
 import com.nitin.networkerrorhandler.datasource.model.ErrorResponse
 import com.nitin.networkerrorhandler.datasource.model.Resource
+import retrofit2.HttpException
 import retrofit2.Response
+import java.io.IOException
 
 suspend fun <T> getResult(call: suspend () -> Response<T>): Resource<T> {
 
@@ -21,7 +21,7 @@ suspend fun <T> getResult(call: suspend () -> Response<T>): Resource<T> {
                         ErrorResponse(
                             responseCode = response.code(),
                             responseErrorBody = response.errorBody(),
-                            dataStatus = DataStatus.InvalidData
+                            dataStatus = DataStatus.ServerError
                         )
                     )
                 }
@@ -31,64 +31,106 @@ suspend fun <T> getResult(call: suspend () -> Response<T>): Resource<T> {
                     ErrorResponse(
                         responseCode = response.code(),
                         responseErrorBody = response.errorBody(),
-                        dataStatus = DataStatus.HTTPError
+                        dataStatus = DataStatus.InvalidData
                     )
                 )
             }
         }
-    } catch (exception: Exception) {
-        Resource.Error(
-            ErrorResponse(
-                exception = exception,
-                dataStatus = DataStatus.GotException
-            )
-        )
-    }
-}
+    } catch (throwable: Throwable) {
 
-suspend fun <T> executeGraphQlAPi(call: suspend () -> com.apollographql.apollo.api.Response<T>): Resource<T> {
-    return try {
-        val response = call()
-        when {
-            response.data != null && response.hasErrors().not() -> {
-                Resource.Success(response.data!!)
-            }
-            response.hasErrors() -> {
+        when (throwable) {
+            is IOException -> {
                 Resource.Error(
                     ErrorResponse(
-                        responseCode = 101,
-                        responseErrorBody = null,
-                        dataStatus = DataStatus.InvalidData,
-                        graphQlError = Gson().fromJson(
-                            response.errors?.firstOrNull()?.toString(),
-                            Error::class.java
-                        )
+                        exception = throwable,
+                        dataStatus = DataStatus.NetworkError
+                    )
+                )
+            }
+            is HttpException -> {
+                Resource.Error(
+                    ErrorResponse(
+                        exception = throwable,
+                        dataStatus = DataStatus.HTTPError
                     )
                 )
             }
             else -> {
                 Resource.Error(
                     ErrorResponse(
-                        responseCode = 101,
-                        responseErrorBody = null,
-                        dataStatus = DataStatus.HTTPError,
-                        graphQlError = Gson().fromJson(
-                            response.errors?.firstOrNull()?.toString(),
-                            Error::class.java
-                        )
+                        exception = throwable,
+                        dataStatus = DataStatus.GotException
                     )
                 )
             }
         }
-    } catch (ex: Exception) {
-        Resource.Error(
-            ErrorResponse(
-                exception = ex,
-                dataStatus = DataStatus.GotException
-            )
-        )
+
     }
 }
+
+//suspend fun <T> executeGraphQlAPi(call: suspend () -> com.apollographql.apollo.api.Response<T>): Resource<T> {
+//    return try {
+//        val response = call()
+//        when {
+//            response.data != null && response.hasErrors().not() -> {
+//                Resource.Success(response.data!!)
+//            }
+//            response.hasErrors() -> {
+//                Resource.Error(
+//                    ErrorResponse(
+//                        responseCode = 101,
+//                        responseErrorBody = null,
+//                        dataStatus = DataStatus.ServerError,
+//                        graphQlError = Gson().fromJson(
+//                            response.errors?.firstOrNull()?.toString(),
+//                            Error::class.java
+//                        )
+//                    )
+//                )
+//            }
+//            else -> {
+//                Resource.Error(
+//                    ErrorResponse(
+//                        responseCode = 101,
+//                        responseErrorBody = null,
+//                        dataStatus = DataStatus.InvalidData,
+//                        graphQlError = Gson().fromJson(
+//                            response.errors?.firstOrNull()?.toString(),
+//                            Error::class.java
+//                        )
+//                    )
+//                )
+//            }
+//        }
+//    } catch (throwable: Exception) {
+//        when (throwable) {
+//            is IOException -> {
+//                Resource.Error(
+//                    ErrorResponse(
+//                        exception = throwable,
+//                        dataStatus = DataStatus.NetworkError
+//                    )
+//                )
+//            }
+//            is HttpException -> {
+//                Resource.Error(
+//                    ErrorResponse(
+//                        exception = throwable,
+//                        dataStatus = DataStatus.HTTPError
+//                    )
+//                )
+//            }
+//            else -> {
+//                Resource.Error(
+//                    ErrorResponse(
+//                        exception = throwable,
+//                        dataStatus = DataStatus.GotException
+//                    )
+//                )
+//            }
+//        }
+//    }
+//}
 
 
 /*

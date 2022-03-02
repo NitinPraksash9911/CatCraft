@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="default_error_title">Oh, Something Went wrong</string>
+    <string name="default_error_desc">Please wait for some time mean while you can enjoy inspire sections</string>
+</resources>

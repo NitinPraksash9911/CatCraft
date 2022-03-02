@@ -1,7 +1,6 @@
 package com.example.catcraft.ui.listframent.datasource.repository
 
 import com.example.catcraft.ui.listframent.datasource.model.CatBreedData
-import com.nitin.networkerrorhandler.utils.getResult
 import dagger.hilt.android.scopes.ViewModelScoped
 import retrofit2.Response
 import javax.inject.Inject
@@ -12,9 +11,9 @@ class LocalCateBreedRepository @Inject constructor(
 ) {
 
     suspend fun getLocalData() {
-        getResult {
-            getDataLocal()
-        }
+//        getResult {
+//            getDataLocal()
+//        }
     }
 
 

@@ -1,6 +1,6 @@
 package com.example.catcraft.arch
 
-import com.nitin.networkerrorhandler.datasource.model.ErrorResponse
+import com.jumpingminds.networkrequesthandler.datasource.model.ErrorResponse
 
 
 sealed class ViewState<out T> {

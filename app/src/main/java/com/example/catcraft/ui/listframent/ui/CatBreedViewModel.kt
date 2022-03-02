@@ -6,8 +6,8 @@ import com.example.catcraft.arch.ViewState
 import com.example.catcraft.ui.listframent.datasource.model.CatBreedData
 import com.example.catcraft.ui.listframent.datasource.repository.IDataCatBreedRepository
 import com.example.catcraft.utils.DispatcherProvider
-import com.nitin.networkerrorhandler.datasource.model.ErrorResponse
-import com.nitin.networkerrorhandler.datasource.model.Resource
+import com.jumpingminds.networkrequesthandler.datasource.model.ErrorResponse
+import com.jumpingminds.networkrequesthandler.datasource.model.NetworkResource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -40,16 +40,16 @@ class CatBreedViewModel @Inject constructor(
 
     }
 
-    private fun handlerCatBreedResult(result: Resource<List<CatBreedData>>) {
+    private fun handlerCatBreedResult(result: NetworkResource<List<CatBreedData>>) {
         when (result) {
-            is Resource.Success -> showCatBreedList(result.value)
-            is Resource.Error -> {
+            is NetworkResource.Success -> showCatBreedList(result.data)
+            is NetworkResource.Error -> {
                 showError(result.errorResponse)
             }
         }
     }
 
-   private fun showError(errorResponse: ErrorResponse) {
+    private fun showError(errorResponse: ErrorResponse) {
         _breedListData.value = ViewState.Error(errorResponse)
     }
 

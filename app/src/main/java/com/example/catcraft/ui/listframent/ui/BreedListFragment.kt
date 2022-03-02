@@ -12,8 +12,7 @@ import com.example.catcraft.databinding.FragmentBreedListBinding
 import com.example.catcraft.utils.hide
 import com.example.catcraft.utils.launchAndCollectIn
 import com.example.catcraft.utils.show
-import com.nitin.networkerrorhandler.errortypes.ErrorHandler
-import com.nitin.networkerrorhandler.datasource.model.TypeError
+import com.jumpingminds.networkrequesthandler.presenter.ErrorHandler
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.InternalCoroutinesApi
 
@@ -69,16 +68,18 @@ class BreedListFragment : BaseFragment<FragmentBreedListBinding>
                     binding.errorTv.show()
                     ErrorHandler.showError(
                         errorResponse = breedEvent.errorResponse,
-                        TypeError.Snack(requireActivity())
-
-                        // not use type here and the type will come from backend
-                        // and if we got the exception show snack bar with message
-                        //
+                        requireActivity()
                     )
+
+                    // not use type here and the type will come from backend
+                    // and if we got the exception show snack bar with message
+                    //
+
                     ErrorHandler.showError(
                         errorResponse = breedEvent.errorResponse,
-                        TypeError.Toast(requireActivity())
+                        requireActivity()
                     )
+
 
                     //
 

@@ -7,6 +7,6 @@ import retrofit2.http.GET
 
 interface CatBreedService {
 
-    @GET("v1/breds")
+    @GET("v1/breeds")
     suspend fun getCatBreedList(): Response<List<CatBreedData>>
 }

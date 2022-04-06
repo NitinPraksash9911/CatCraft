@@ -30,7 +30,7 @@ class CatBreedViewModel @Inject constructor(
     }
 
     fun fetchCatBreeds() {
-        viewModelScope.launch(dispatchers.io) {
+        viewModelScope.launch {
             val result = repositoryData.getCatBreedList()
             handlerCatBreedResult(result)
             val string = "ss"

@@ -8,6 +8,7 @@ import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.jumpingminds.networkrequesthandler.R
 import com.jumpingminds.networkrequesthandler.datasource.model.ErrorResponse
 import com.jumpingminds.networkrequesthandler.datasource.model.ErrorStatus
+import com.jumpingminds.networkrequesthandler.datasource.model.TypeError
 import com.jumpingminds.networkrequesthandler.utils.loadImageWithUrl
 import com.jumpingminds.networkrequesthandler.view.NPSnackBar
 
@@ -22,13 +23,12 @@ internal object ProduceError {
             ErrorStatus.ServerError, ErrorStatus.InvalidError -> {
                 displaySnackBar(
                     context = activity,
-                    errorTitle = errorResponse.graphQlErrorResponse?.errorTitle
-                        ?: "Just Be Patience",
-                    errorMsg = errorResponse.graphQlErrorResponse?.errorMsg
+                    errorTitle = errorResponse.exception?.message ?: "Wait a minute",
+                    errorMsg = errorResponse.retrofitErrorResponse.toString()
                         ?: "And do one minute mediation",
-                    errorType = errorResponse.graphQlErrorResponse?.errorType,
-                    errorImageUrl = errorResponse.graphQlErrorResponse?.errorImageUrl,
-                    isAllowToErrorOnUI = errorResponse.graphQlErrorResponse?.errorVisibility ?: true
+                    typeError = errorResponse.typeError,
+                    errorImageUrl = "",
+                    isAllowToErrorOnUI = true
                 )
             }
 
@@ -39,7 +39,7 @@ internal object ProduceError {
                     context = activity,
                     errorTitle = "Just Be Patience",
                     errorMsg = errorResponse.exception?.localizedMessage,
-                    errorType = "toast",
+                    typeError = errorResponse.typeError,
                     errorImageUrl = null
                 )
             }
@@ -49,7 +49,7 @@ internal object ProduceError {
                     context = activity,
                     errorTitle = "Just Be Patience",
                     errorMsg = "NE: " + errorResponse.exception?.localizedMessage,
-                    errorType = "snack",
+                    typeError = errorResponse.typeError,
                     errorImageUrl = null
                 )
             }
@@ -59,7 +59,7 @@ internal object ProduceError {
                     context = activity,
                     errorTitle = "Just Be Patience",
                     errorMsg = "GE: " + errorResponse.exception?.localizedMessage,
-                    errorType = "toast",
+                    typeError = errorResponse.typeError,
                     errorImageUrl = null
                 )
 
@@ -72,8 +72,8 @@ internal object ProduceError {
         errorTitle: String,
         errorMsg: String? = "Stay connected with us",
         errorImageUrl: String?,
-        errorType: String? = "toast",
-        duration: Int = BaseTransientBottomBar.LENGTH_INDEFINITE,
+        typeError: TypeError,
+        duration: Int = BaseTransientBottomBar.LENGTH_LONG,
         isAllowToErrorOnUI: Boolean = true
     ) {
 
@@ -81,8 +81,8 @@ internal object ProduceError {
             return
         }
 
-        when (errorType) {
-            "snack" -> {
+        when (typeError) {
+            TypeError.Snack -> {
                 NPSnackBar(context)
                     .show {
                         duration(duration)
@@ -112,7 +112,7 @@ internal object ProduceError {
                         }
                     }
             }
-            "toast" -> {
+            TypeError.Toast -> {
                 NPSnackBar(context)
                     .show {
                         duration(duration)
@@ -135,16 +135,6 @@ internal object ProduceError {
 
                         }
                     }
-            }
-            else -> {
-                displaySnackBar(
-                    context,
-                    errorTitle,
-                    errorMsg,
-                    errorImageUrl,
-                    "snack",
-                    isAllowToErrorOnUI = true
-                )
             }
         }
 

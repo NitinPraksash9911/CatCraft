@@ -2,12 +2,12 @@ package com.example.catcraft.ui.listframent.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.catcraft.arch.ViewState
 import com.example.catcraft.ui.listframent.datasource.model.CatBreedData
 import com.example.catcraft.ui.listframent.datasource.repository.IDataCatBreedRepository
 import com.example.catcraft.utils.DispatcherProvider
 import com.jumpingminds.networkrequesthandler.datasource.model.ErrorResponse
 import com.jumpingminds.networkrequesthandler.datasource.model.NetworkResource
+import com.jumpingminds.networkrequesthandler.datasource.model.ViewStateResource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -20,9 +20,9 @@ class CatBreedViewModel @Inject constructor(
     private val dispatchers: DispatcherProvider
 ) : ViewModel() {
 
-    private var _breedListData = MutableStateFlow<ViewState<List<CatBreedData>>>(ViewState.Loading)
+    private var _breedListData = MutableStateFlow<ViewStateResource<List<CatBreedData>>>(ViewStateResource.ViewLoading)
 
-    val breedListData: StateFlow<ViewState<List<CatBreedData>>>
+    val breedListData: StateFlow<ViewStateResource<List<CatBreedData>>>
         get() = _breedListData
 
     init {
@@ -33,7 +33,6 @@ class CatBreedViewModel @Inject constructor(
         viewModelScope.launch(dispatchers.io) {
             val result = repositoryData.getCatBreedList()
             handlerCatBreedResult(result)
-
             val string = "ss"
             string[0]
         }
@@ -50,11 +49,11 @@ class CatBreedViewModel @Inject constructor(
     }
 
     private fun showError(errorResponse: ErrorResponse) {
-        _breedListData.value = ViewState.Error(errorResponse)
+        _breedListData.value = ViewStateResource.ViewError(errorResponse)
     }
 
     private fun showCatBreedList(value: List<CatBreedData>) {
-        _breedListData.value = ViewState.Success(value)
+        _breedListData.value = ViewStateResource.ViewSuccess(value)
     }
 
 }

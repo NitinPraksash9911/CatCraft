@@ -6,8 +6,8 @@ package com.jumpingminds.networkrequesthandler.datasource.model
 
 This class helps to choose the type on error to be shown to the UI
  */
-sealed class TypeError(val name: String) {
-    object Toast : TypeError("toast")
-    object Snack : TypeError("snack")
+sealed class TypeError() {
+    object Toast : TypeError()
+    object Snack : TypeError()
 }
 

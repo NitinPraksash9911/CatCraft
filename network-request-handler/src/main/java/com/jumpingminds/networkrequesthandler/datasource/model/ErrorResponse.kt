@@ -15,6 +15,6 @@ data class ErrorResponse(
     val responseCode: Int? = 0,
     val retrofitErrorResponse: ResponseBody? = null,
     val errorStatus: ErrorStatus,
-    val graphQlErrorResponse: GraphQlError? = null,
     val exception: Throwable? = null,
+    val typeError: TypeError = TypeError.Snack
 )

@@ -7,11 +7,11 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle.State
 import androidx.navigation.fragment.findNavController
 import com.example.catcraft.arch.BaseFragment
-import com.example.catcraft.arch.ViewState.*
 import com.example.catcraft.databinding.FragmentBreedListBinding
 import com.example.catcraft.utils.hide
 import com.example.catcraft.utils.launchAndCollectIn
 import com.example.catcraft.utils.show
+import com.jumpingminds.networkrequesthandler.datasource.model.ViewStateResource
 import com.jumpingminds.networkrequesthandler.presenter.ErrorHandler
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.InternalCoroutinesApi
@@ -49,20 +49,20 @@ class BreedListFragment : BaseFragment<FragmentBreedListBinding>
 
         viewModel.breedListData.launchAndCollectIn(this, State.STARTED) { breedEvent ->
             when (breedEvent) {
-                is Loading -> {
+                is ViewStateResource.ViewLoading -> {
                     binding.progressCircular.visibility = View.VISIBLE
                     binding.breedListRv.hide()
                     binding.errorTv.hide()
                     Log.d(TAG, "Loading")
                 }
-                is Success -> {
+                is ViewStateResource.ViewSuccess -> {
                     binding.progressCircular.visibility = View.GONE
                     binding.errorTv.hide()
                     binding.breedListRv.show()
                     breedAdapter.submitList(breedEvent.item)
                     Log.d(TAG, breedEvent.item.toString())
                 }
-                is Error -> {
+                is ViewStateResource.ViewError -> {
                     binding.progressCircular.visibility = View.GONE
                     binding.breedListRv.hide()
                     binding.errorTv.show()
@@ -93,7 +93,9 @@ class BreedListFragment : BaseFragment<FragmentBreedListBinding>
     private fun onListItemClick(position: Int) {
         val currentCatBreed = breedAdapter.currentList[position]
         val directions =
-            BreedListFragmentDirections.actionBreedListFragmentToBreedDetailFragment(currentCatBreed)
+                BreedListFragmentDirections.actionBreedListFragmentToBreedDetailFragment(
+                    currentCatBreed
+                )
         findNavController().navigate(directions)
     }
 

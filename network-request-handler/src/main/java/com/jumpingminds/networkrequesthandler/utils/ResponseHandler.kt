@@ -1,141 +1,82 @@
 package com.jumpingminds.networkrequesthandler.utils
 
-import com.apollographql.apollo3.api.Operation
-import com.apollographql.apollo3.exception.ApolloException
-import com.apollographql.apollo3.exception.ApolloHttpException
-import com.apollographql.apollo3.exception.ApolloNetworkException
-import com.google.gson.Gson
 import com.jumpingminds.networkrequesthandler.datasource.model.ErrorResponse
 import com.jumpingminds.networkrequesthandler.datasource.model.ErrorStatus
-import com.jumpingminds.networkrequesthandler.datasource.model.GraphQlError
 import com.jumpingminds.networkrequesthandler.datasource.model.NetworkResource
+import com.jumpingminds.networkrequesthandler.datasource.model.TypeError
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import retrofit2.HttpException
 import retrofit2.Response
 import java.io.IOException
 
 suspend fun <T> executeRetrofitApi(call: suspend () -> Response<T>): NetworkResource<T> {
 
-    return try {
-        val response = call()
-        when {
-            response.isSuccessful -> {
-                val body = response.body()
-                if (body != null) {
-                    NetworkResource.Success(body)
-                } else {
+    return withContext(Dispatchers.IO) {
+        try {
+            val response = call()
+            when {
+                response.isSuccessful -> {
+                    val body = response.body()
+                    if (body != null) {
+                        NetworkResource.Success(body)
+                    } else {
+                        NetworkResource.Error(
+                            ErrorResponse(
+                                responseCode = response.code(),
+                                retrofitErrorResponse = response.errorBody(),
+                                errorStatus = ErrorStatus.ServerError,
+                                typeError = TypeError.Snack
+                            )
+                        )
+                    }
+                }
+                else -> {
                     NetworkResource.Error(
                         ErrorResponse(
                             responseCode = response.code(),
                             retrofitErrorResponse = response.errorBody(),
-                            errorStatus = ErrorStatus.ServerError
+                            errorStatus = ErrorStatus.InvalidError,
+                            typeError = TypeError.Snack
                         )
                     )
                 }
             }
-            else -> {
-                NetworkResource.Error(
-                    ErrorResponse(
-                        responseCode = response.code(),
-                        retrofitErrorResponse = response.errorBody(),
-                        errorStatus = ErrorStatus.InvalidError
-                    )
-                )
-            }
-        }
-    } catch (throwable: Throwable) {
+        } catch (throwable: Throwable) {
 
-        when (throwable) {
-            is IOException -> {
-                NetworkResource.Error(
-                    ErrorResponse(
-                        exception = throwable,
-                        errorStatus = ErrorStatus.NetworkError
-                    )
-                )
-            }
-            is HttpException -> {
-                NetworkResource.Error(
-                    ErrorResponse(
-                        exception = throwable,
-                        errorStatus = ErrorStatus.HTTPError
-                    )
-                )
-            }
-            else -> {
-                NetworkResource.Error(
-                    ErrorResponse(
-                        exception = throwable,
-                        errorStatus = ErrorStatus.GotException
-                    )
-                )
-            }
-        }
-
-    }
-}
-
-suspend fun <T : Operation.Data> executeGraphQlApi(call: suspend () -> com.apollographql.apollo3.api.ApolloResponse<T>): NetworkResource<T> {
-    return try {
-        val response = call()
-        when {
-            response.data != null && response.hasErrors().not() -> {
-                NetworkResource.Success(response.data!!)
-            }
-            response.hasErrors() -> {
-                NetworkResource.Error(
-                    ErrorResponse(
-                        responseCode = 101,
-                        retrofitErrorResponse = null,
-                        errorStatus = ErrorStatus.ServerError,
-                        graphQlErrorResponse = GraphQlError.from(
-                            Gson(),
-                            response.errors?.firstOrNull()?.nonStandardFields
+            when (throwable) {
+                is IOException -> {
+                    NetworkResource.Error(
+                        ErrorResponse(
+                            exception = throwable,
+                            errorStatus = ErrorStatus.NetworkError,
+                            typeError = TypeError.Toast
                         )
                     )
-                )
-            }
-            else -> {
-                NetworkResource.Error(
-                    ErrorResponse(
-                        responseCode = 101,
-                        retrofitErrorResponse = null,
-                        errorStatus = ErrorStatus.InvalidError,
-                        graphQlErrorResponse = GraphQlError.from(
-                            Gson(),
-                            response.errors?.firstOrNull()?.nonStandardFields
+                }
+                is HttpException -> {
+                    NetworkResource.Error(
+                        ErrorResponse(
+                            exception = throwable,
+                            errorStatus = ErrorStatus.HTTPError,
+                            typeError = TypeError.Snack
                         )
                     )
-                )
-            }
-        }
-    } catch (throwable: ApolloException) {
-        when (throwable) {
-            is ApolloNetworkException -> {
-                NetworkResource.Error(
-                    ErrorResponse(
-                        exception = throwable,
-                        errorStatus = ErrorStatus.NetworkError
+                }
+                else -> {
+                    NetworkResource.Error(
+                        ErrorResponse(
+                            exception = throwable,
+                            errorStatus = ErrorStatus.GotException,
+                            typeError = TypeError.Snack
+                        )
                     )
-                )
+                }
             }
-            is ApolloHttpException -> {
-                NetworkResource.Error(
-                    ErrorResponse(
-                        exception = throwable,
-                        errorStatus = ErrorStatus.HTTPError
-                    )
-                )
-            }
-            else -> {
-                NetworkResource.Error(
-                    ErrorResponse(
-                        exception = throwable,
-                        errorStatus = ErrorStatus.GotException
-                    )
-                )
-            }
+
         }
     }
+
 }
 
 
